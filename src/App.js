@@ -1,18 +1,56 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      input: '',
+      character: {
+        name: 'bootyrock',
+        level: 1,
+        health: 20,
+        attack: 5
+      },
+      enemies: [
+        {
+          name: 'rock',
+          level: 1,
+          health: 10,
+          attack: 0
+        }
+      ]
+    }
+    this.changeInput = this.changeInput.bind(this)
+    this.onEnterInput = this.onEnterInput.bind(this)
+  }
+
+  changeInput(e) {
+    this.setState({
+      input: e.target.value
+    })
+  }
+
+  onEnterInput(e) {
+    e.preventDefault()
+    const mainTerminal = document.getElementsByClassName('main-terminal')[0]
+    const newLine = document.createElement('p')
+    newLine.innerText = '>' + this.state.input
+    mainTerminal.append(newLine)
+    mainTerminal.scrollTop = mainTerminal.scrollHeight
+    this.setState({input: ''})
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Rock Fighter</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="main-terminal"></div>
+        <form onSubmit={this.onEnterInput}>
+          <input className="main-input" type="text" value={this.state.input} onChange={this.changeInput}/>
+        </form>
       </div>
     );
   }
