@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Attack from './Attack'
 
 class App extends Component {
   constructor() {
@@ -12,14 +13,12 @@ class App extends Component {
         health: 20,
         attack: 5
       },
-      enemies: [
-        {
+      enemy: {
           name: 'rock',
           level: 1,
           health: 10,
           attack: 0
-        }
-      ]
+      },
     }
     this.changeInput = this.changeInput.bind(this)
     this.onEnterInput = this.onEnterInput.bind(this)
@@ -37,6 +36,19 @@ class App extends Component {
     return !(text.trim() === '')
   }
 
+  addNewLine(message, classForMessage){
+    classForMessage = classForMessage || ''
+    const mainTerminal = document.getElementById('main-terminal')
+    const newLine = document.createElement('p')
+    const inLineClass = classForMessage ?  ` class="${classForMessage}"` : ''
+    newLine.innerHTML = `<span${inLineClass}>${message}</span>`
+    if (classForMessage === "user-text-printed") {
+      newLine.innerHTML = '> ' + newLine.innerHTML
+    }
+    mainTerminal.append(newLine)
+    mainTerminal.scrollTop = mainTerminal.scrollHeight
+  }
+
   parseInput(text) {
     text = text.toLowerCase().replace(/[^\w\s]/gi, '')
     const mainTerminal = document.getElementById('main-terminal')
@@ -48,7 +60,16 @@ class App extends Component {
         mainTerminal.append(newLine)
         break
       case 'attack':
-        newLine.innerHTML = 'test message for attack'
+        console.log('health before attack:', this.state.enemy.health)
+        const attackInstance = Attack({
+          character: this.state.character,
+          enemy: this.state.enemy
+        })
+        this.setState({
+          enemy: attackInstance.enemy
+        })
+        console.log('health after attack:', this.state.enemy.health)
+        newLine.innerHTML = attackInstance.message
         mainTerminal.append(newLine)
         break
       default:
@@ -63,13 +84,14 @@ class App extends Component {
       this.setState({input: ''})
       return
     }
-    const mainTerminal = document.getElementById('main-terminal')
-    const newLine = document.createElement('p')
-    newLine.innerHTML = '> <span class="user-text-printed">' + this.state.input.replace(/[^\w\s]/gi, '') +'</span>'
-    mainTerminal.append(newLine)
+    const userInput = this.state.input.replace(/[^\w\s]/gi, '')
+    this.addNewLine(userInput, "user-text-printed")
     this.parseInput(this.state.input)
-    mainTerminal.scrollTop = mainTerminal.scrollHeight
     this.setState({input: ''})
+  }
+
+  componentDidMount() {
+    this.mainInput.focus()
   }
 
   render() {
@@ -80,7 +102,7 @@ class App extends Component {
         </header>
         <div className="main-terminal" id="main-terminal"></div>
         <form onSubmit={this.onEnterInput}>
-          <input className="main-input" type="text" value={this.state.input} onChange={this.changeInput}/>
+          <input className="main-input"  id="main-input" type="text" value={this.state.input} onChange={this.changeInput} ref={(input)=>{this.mainInput = input}} autocomplete="off"/>
         </form>
       </div>
     );
