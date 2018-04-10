@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Attack from './Attack'
 import Help from './Help'
+import Welcome from './Welcome'
 
 class App extends Component {
   constructor() {
@@ -41,13 +42,21 @@ class App extends Component {
   addNewLine(message, classForMessage){
     classForMessage = classForMessage || ''
     const mainTerminal = document.getElementById('main-terminal')
-    const newLine = document.createElement('p')
     const inLineClass = classForMessage ?  ` class="${classForMessage}"` : ''
-    newLine.innerHTML = `<span${inLineClass}>${message}</span>`
-    if (classForMessage === "user-text-printed") {
-      newLine.innerHTML = '> ' + newLine.innerHTML
+    if (typeof message === 'string') {
+      const newLine = document.createElement('p')
+      newLine.innerHTML = `<span${inLineClass}>${message}</span>`
+      if (classForMessage === "user-text-printed") {
+        newLine.innerHTML = '> ' + newLine.innerHTML
+      }
+      mainTerminal.append(newLine)
+    } else {
+      for (let i = 0; i < message.length; i++) {
+        const newLine = document.createElement('p')
+        newLine.innerHTML = `<span${inLineClass}>${message[i]}</span>`
+        mainTerminal.append(newLine)
+      }
     }
-    mainTerminal.append(newLine)
     mainTerminal.scrollTop = mainTerminal.scrollHeight
   }
 
@@ -58,9 +67,7 @@ class App extends Component {
     switch(verb) {
       case 'help':
         const helpArray = Help(noun)
-        for (let i = 0; i < helpArray.length; i++) {
-          this.addNewLine(helpArray[i],'cpu-response-printed')
-        }
+        this.addNewLine(helpArray,'cpu-response-printed')
         break
       case 'attack':
         const attackInstance = Attack({
@@ -89,8 +96,16 @@ class App extends Component {
     this.setState({input: ''})
   }
 
+  onPageLoad() {
+    this.addNewLine(Welcome({
+      character: this.state.character,
+      enemy: this.state.enemy
+    }))
+  }
+
   componentDidMount() {
     this.mainInput.focus()
+    this.onPageLoad()
   }
 
   render() {
@@ -99,7 +114,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Rocking Fighter</h1>
         </header>
-        <div className="main-terminal" id="main-terminal"></div>
+        <div className="main-terminal" id="main-terminal" ref={(terminal)=>{this.mainTerminal = terminal}}></div>
         <form onSubmit={this.onEnterInput}>
           <input className="main-input"  id="main-input" type="text" value={this.state.input} onChange={this.changeInput} ref={(input)=>{this.mainInput = input}} autoComplete="off"/>
         </form>
