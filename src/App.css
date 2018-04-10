@@ -31,3 +31,11 @@
   width: 750px;
   margin:auto;
 }
+
+.user-text-printed {
+  background: #222;
+  color: #DDD;
+  font-size: 10pt;
+  font-weight: 700;
+  padding: 1px 3px;
+}
