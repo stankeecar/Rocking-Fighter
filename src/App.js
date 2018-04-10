@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Attack from './Attack'
+import Help from './Help'
 
 class App extends Component {
   constructor() {
@@ -50,14 +51,15 @@ class App extends Component {
   }
 
   parseInput(text) {
-    text = text.toLowerCase().replace(/[^\w\s]/gi, '')
     const mainTerminal = document.getElementById('main-terminal')
     const newLine = document.createElement('p')
     newLine.className = 'cpu-response-printed'
     switch(text) {
       case 'help':
-        newLine.innerHTML = 'test message for help'
-        mainTerminal.append(newLine)
+        const helpArray = Help()
+        for (let i = 0; i < helpArray.length; i++) {
+          this.addNewLine(helpArray[i],'cpu-response-printed')
+        }
         break
       case 'attack':
         console.log('health before attack:', this.state.enemy.health)
@@ -84,9 +86,9 @@ class App extends Component {
       this.setState({input: ''})
       return
     }
-    const userInput = this.state.input.replace(/[^\w\s]/gi, '')
+    const userInput = this.state.input.toLowerCase().replace(/[^\w\s]/gi, '')
     this.addNewLine(userInput, "user-text-printed")
-    this.parseInput(this.state.input)
+    this.parseInput(userInput)
     this.setState({input: ''})
   }
 
@@ -102,7 +104,7 @@ class App extends Component {
         </header>
         <div className="main-terminal" id="main-terminal"></div>
         <form onSubmit={this.onEnterInput}>
-          <input className="main-input"  id="main-input" type="text" value={this.state.input} onChange={this.changeInput} ref={(input)=>{this.mainInput = input}} autocomplete="off"/>
+          <input className="main-input"  id="main-input" type="text" value={this.state.input} onChange={this.changeInput} ref={(input)=>{this.mainInput = input}} autoComplete="off"/>
         </form>
       </div>
     );
