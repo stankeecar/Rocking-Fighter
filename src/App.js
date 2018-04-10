@@ -3,6 +3,7 @@ import './App.css';
 import Attack from './Attack'
 import Help from './Help'
 import Welcome from './Welcome'
+import VictorySound from './VictorySound'
 
 class App extends Component {
   constructor() {
@@ -22,6 +23,7 @@ class App extends Component {
           attack: 0,
           description: `It's a rock. You don't trust it...`
       },
+      playStatus: 'STOPPED'
     }
     this.changeInput = this.changeInput.bind(this)
     this.onEnterInput = this.onEnterInput.bind(this)
@@ -77,6 +79,12 @@ class App extends Component {
         this.setState({
           enemy: attackInstance.enemy
         })
+        if (attackInstance.enemy.health === 0) {
+          this.setState({playStatus: 'PLAYING'})
+          setTimeout(() =>{
+            this.setState({playStatus: 'STOPPED'})
+          }, 5000)
+        }
         this.addNewLine(attackInstance.message, 'cpu-response-printed')
         break
       default:
@@ -118,6 +126,7 @@ class App extends Component {
         <form onSubmit={this.onEnterInput}>
           <input className="main-input"  id="main-input" type="text" value={this.state.input} onChange={this.changeInput} ref={(input)=>{this.mainInput = input}} autoComplete="off"/>
         </form>
+        <VictorySound playStatus={this.state.playStatus}/>
       </div>
     );
   }
