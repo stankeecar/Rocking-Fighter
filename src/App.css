@@ -19,6 +19,7 @@
 
 .main-terminal {
   border: 1px solid black;
+  font-family:monospace;
   font-size: 14px;
   height: 350px;
   margin: 20px auto;
@@ -32,10 +33,17 @@
   margin:auto;
 }
 
+.cpu-response-printed {
+  padding: 0px 3px;
+  margin: 0;
+  line-height: 5%;
+}
+
 .user-text-printed {
   background: #222;
   color: #DDD;
   font-size: 10pt;
   font-weight: 700;
+  margin: 0;
   padding: 1px 3px;
 }
