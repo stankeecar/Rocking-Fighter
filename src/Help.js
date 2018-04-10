@@ -21,7 +21,7 @@ function Help(query){
     attack: attack,
     look: look,
   }
-  let response = helpList[query]
+  const response = helpList[query].slice()
   if (query === 'general') {
     const keyList = Object.keys(helpList)
     // concat isn't working. We tried.
