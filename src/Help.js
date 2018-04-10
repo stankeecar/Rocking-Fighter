@@ -22,9 +22,6 @@ function Help(query){
     look: look,
   }
   let response = helpList[query]
-  console.log(Object.keys(helpList))
-  console.log(response)
-  console.log(query)
   if (query === 'general') {
     const keyList = Object.keys(helpList)
     // concat isn't working. We tried.
