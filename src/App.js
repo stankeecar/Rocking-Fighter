@@ -31,8 +31,17 @@ class App extends Component {
     })
   }
 
+  inputIsValid(text) {
+    // later iterations will consider more options
+    return !(text.trim() === '')
+  }
+
   onEnterInput(e) {
     e.preventDefault()
+    if (!this.inputIsValid(this.state.input)) {
+      this.setState({input: ''})
+      return
+    }
     const mainTerminal = document.getElementsByClassName('main-terminal')[0]
     const newLine = document.createElement('p')
     newLine.innerHTML = '><span class="user-text-printed">' + this.state.input +'</span>'
