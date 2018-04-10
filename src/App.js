@@ -18,7 +18,8 @@ class App extends Component {
           name: 'rock',
           level: 1,
           health: 10,
-          attack: 0
+          attack: 0,
+          description: `It's a rock. You don't trust it...`
       },
     }
     this.changeInput = this.changeInput.bind(this)
@@ -51,18 +52,17 @@ class App extends Component {
   }
 
   parseInput(text) {
-    const mainTerminal = document.getElementById('main-terminal')
-    const newLine = document.createElement('p')
-    newLine.className = 'cpu-response-printed'
-    switch(text) {
+    const textArray = text.split(' ')
+    const verb = textArray[0]
+    const noun = textArray[1]
+    switch(verb) {
       case 'help':
-        const helpArray = Help()
+        const helpArray = Help(noun)
         for (let i = 0; i < helpArray.length; i++) {
           this.addNewLine(helpArray[i],'cpu-response-printed')
         }
         break
       case 'attack':
-        console.log('health before attack:', this.state.enemy.health)
         const attackInstance = Attack({
           character: this.state.character,
           enemy: this.state.enemy
@@ -70,13 +70,10 @@ class App extends Component {
         this.setState({
           enemy: attackInstance.enemy
         })
-        console.log('health after attack:', this.state.enemy.health)
-        newLine.innerHTML = attackInstance.message
-        mainTerminal.append(newLine)
+        this.addNewLine(attackInstance.message, 'cpu-response-printed')
         break
       default:
-        newLine.innerHTML = `Do not understand "${text}"`
-        mainTerminal.append(newLine)
+        this.addNewLine(`Do not understand "${text}"`, 'cpu-response-printed')
     }
   }
 
