@@ -32,8 +32,29 @@ class App extends Component {
   }
 
   inputIsValid(text) {
-    // later iterations will consider more options
+    // later iterations will consider/reject more options
+    // 'every' prototype function through array of invalid things? valid things?
     return !(text.trim() === '')
+  }
+
+  parseInput(text) {
+    text = text.toLowerCase()
+    const mainTerminal = document.getElementById('main-terminal')
+    const newLine = document.createElement('p')
+    newLine.className = 'cpu-response-printed'
+    switch(text) {
+      case 'help':
+        newLine.innerHTML = 'test message for help'
+        mainTerminal.append(newLine)
+        break
+      case 'attack':
+        newLine.innerHTML = 'test message for attack'
+        mainTerminal.append(newLine)
+        break
+      default:
+        newLine.innerHTML = `Do not understand "${text}"`
+        mainTerminal.append(newLine)
+    }
   }
 
   onEnterInput(e) {
@@ -42,10 +63,11 @@ class App extends Component {
       this.setState({input: ''})
       return
     }
-    const mainTerminal = document.getElementsByClassName('main-terminal')[0]
+    const mainTerminal = document.getElementById('main-terminal')
     const newLine = document.createElement('p')
-    newLine.innerHTML = '><span class="user-text-printed">' + this.state.input +'</span>'
+    newLine.innerHTML = '> <span class="user-text-printed">' + this.state.input +'</span>'
     mainTerminal.append(newLine)
+    this.parseInput(this.state.input)
     mainTerminal.scrollTop = mainTerminal.scrollHeight
     this.setState({input: ''})
   }
@@ -56,7 +78,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Rocking Fighter</h1>
         </header>
-        <div className="main-terminal"></div>
+        <div className="main-terminal" id="main-terminal"></div>
         <form onSubmit={this.onEnterInput}>
           <input className="main-input" type="text" value={this.state.input} onChange={this.changeInput}/>
         </form>
