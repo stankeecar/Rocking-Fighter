@@ -45,7 +45,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Rock Fighter</h1>
+          <h1 className="App-title">Rocking Fighter</h1>
         </header>
         <div className="main-terminal"></div>
         <form onSubmit={this.onEnterInput}>

@@ -19,7 +19,8 @@
 
 .main-terminal {
   border: 1px solid black;
-  height: 250px;
+  font-size: 14px;
+  height: 350px;
   margin: 20px auto;
   overflow-y: auto;
   text-align: left;
