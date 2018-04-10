@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   parseInput(text) {
-    text = text.toLowerCase()
+    text = text.toLowerCase().replace(/[^\w\s]/gi, '')
     const mainTerminal = document.getElementById('main-terminal')
     const newLine = document.createElement('p')
     newLine.className = 'cpu-response-printed'
@@ -65,7 +65,7 @@ class App extends Component {
     }
     const mainTerminal = document.getElementById('main-terminal')
     const newLine = document.createElement('p')
-    newLine.innerHTML = '> <span class="user-text-printed">' + this.state.input +'</span>'
+    newLine.innerHTML = '> <span class="user-text-printed">' + this.state.input.replace(/[^\w\s]/gi, '') +'</span>'
     mainTerminal.append(newLine)
     this.parseInput(this.state.input)
     mainTerminal.scrollTop = mainTerminal.scrollHeight
