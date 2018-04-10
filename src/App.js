@@ -35,7 +35,7 @@ class App extends Component {
     e.preventDefault()
     const mainTerminal = document.getElementsByClassName('main-terminal')[0]
     const newLine = document.createElement('p')
-    newLine.innerText = '>' + this.state.input
+    newLine.innerHTML = '><span class="user-text-printed">' + this.state.input +'</span>'
     mainTerminal.append(newLine)
     mainTerminal.scrollTop = mainTerminal.scrollHeight
     this.setState({input: ''})
