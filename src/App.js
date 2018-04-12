@@ -10,6 +10,8 @@ class App extends Component {
     super();
     this.state = {
       input: '',
+      inputHistory: [''],
+      inputHistoryStep: 0,
       character: {
         name: 'bootyrock',
         level: 1,
@@ -27,11 +29,12 @@ class App extends Component {
     }
     this.changeInput = this.changeInput.bind(this)
     this.onEnterInput = this.onEnterInput.bind(this)
+    this.checkKey = this.checkKey.bind(this)
   }
 
   changeInput(e) {
     this.setState({
-      input: e.target.value
+      input: e.target.value,
     })
   }
 
@@ -99,6 +102,12 @@ class App extends Component {
       return
     }
     const userInput = this.state.input.toLowerCase().replace(/[^\w\s]/gi, '')
+    const newInputHistory = this.state.inputHistory.slice()
+    newInputHistory.splice(this.state.inputHistory.length - 1,0,userInput)
+    this.setState({
+      inputHistory: newInputHistory,
+      inputHistoryStep: newInputHistory.length - 1,
+    })
     this.addNewLine(userInput, "user-text-printed")
     this.parseInput(userInput)
     this.setState({input: ''})
@@ -116,7 +125,38 @@ class App extends Component {
     this.onPageLoad()
   }
 
+  checkKey(e) {
+    e = e || window.event
+    let newInputHistoryStep = this.state.inputHistoryStep
+    if (e.keyCode == '38') { // up arrow
+      if (newInputHistoryStep === this.state.inputHistory.length - 1) {
+        const newInputHistory = this.state.inputHistory.slice()
+        newInputHistory[newInputHistory.length - 1] = this.state.input
+        this.setState({ inputHistory: newInputHistory })
+      }
+      newInputHistoryStep > 0
+        ? newInputHistoryStep--
+        : newInputHistoryStep = 0
+      const replacementInput = this.state.inputHistory[newInputHistoryStep]
+      this.setState({
+        inputHistoryStep: newInputHistoryStep,
+        input: replacementInput,
+      })
+    }
+    else if (e.keyCode == '40') { // down arrow
+      newInputHistoryStep < this.state.inputHistory.length - 1
+        ? newInputHistoryStep++
+        : newInputHistoryStep = this.state.inputHistory.length - 1
+      const replacementInput = this.state.inputHistory[newInputHistoryStep]
+      this.setState({
+        inputHistoryStep: newInputHistoryStep,
+        input: replacementInput,
+      })
+    }
+  }
+
   render() {
+    document.onkeydown = this.checkKey
     return (
       <div className="App">
         <header className="App-header">
