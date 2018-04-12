@@ -3,6 +3,7 @@ import './App.css';
 import Attack from './Attack'
 import Help from './Help'
 import Welcome from './Welcome'
+import PrintTerminal from './PrintTerminal'
 
 class App extends Component {
   constructor() {
@@ -42,28 +43,6 @@ class App extends Component {
     return !(text.trim() === '')
   }
 
-  addNewLine(message, classForMessage){
-    classForMessage = classForMessage || ''
-    const mainTerminal = document.getElementById('main-terminal')
-    const inLineClass = classForMessage ?  ` class="${classForMessage}"` : ''
-
-    if (typeof message === 'string') {
-      const newLine = document.createElement('p')
-      newLine.innerHTML = `<span${inLineClass}>${message}</span>`
-      if (classForMessage === "user-text-printed") {
-        newLine.innerHTML = '> ' + newLine.innerHTML
-      }
-      mainTerminal.append(newLine)
-    } else {
-      for (let i = 0; i < message.length; i++) {
-        const newLine = document.createElement('p')
-        newLine.innerHTML = `<span${inLineClass}>${message[i]}</span>`
-        mainTerminal.append(newLine)
-      }
-    }
-    mainTerminal.scrollTop = mainTerminal.scrollHeight
-  }
-
   parseInput(text) {
     const textArray = text.split(' ')
     const verb = textArray[0]
@@ -71,7 +50,7 @@ class App extends Component {
     switch(verb) {
       case 'help':
         const helpArray = Help(noun)
-        this.addNewLine(helpArray,'cpu-response-printed')
+        PrintTerminal(helpArray)
         break
       case 'attack':
         const attackInstance = Attack({
@@ -81,10 +60,10 @@ class App extends Component {
         this.setState({
           enemy: attackInstance.enemy
         })
-        this.addNewLine(attackInstance.message, 'cpu-response-printed')
+        PrintTerminal(attackInstance.message)
         break
       default:
-        this.addNewLine(`Do not understand "${text}"`, 'cpu-response-printed')
+        PrintTerminal([`Do not understand "${text}"`])
     }
   }
 
@@ -101,14 +80,14 @@ class App extends Component {
       inputHistory: newInputHistory,
       inputHistoryStep: newInputHistory.length - 1,
     })
-    this.addNewLine(userInput, "user-text-printed")
+    PrintTerminal([userInput], "user-text-printed")
     this.parseInput(userInput)
     this.setState({input: ''})
   }
 
   componentDidMount() {
     this.mainInput.focus()
-    this.addNewLine(Welcome({
+    PrintTerminal(Welcome({
       character: this.state.character,
       enemy: this.state.enemy
     }))
