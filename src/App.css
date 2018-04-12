@@ -2,6 +2,11 @@ body {
   background-color: #EEE;
 }
 
+p {
+  border: 0;
+  margin: 0 10px;
+}
+
 .App {
   text-align: center;
 }
@@ -38,8 +43,9 @@ body {
 }
 
 .cpu-response-printed {
-  padding: 0px 3px;
+  border: 0;
   margin: 0;
+  padding: 0px 3px;
   line-height: 5%;
 }
 
