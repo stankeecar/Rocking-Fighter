@@ -19,11 +19,11 @@ class App extends Component {
         attack: 5
       },
       enemy: {
-          name: 'rock',
-          level: 1,
-          health: 10,
-          attack: 0,
-          description: `It's a rock. You don't trust it...`
+        name: 'rock',
+        level: 1,
+        health: 10,
+        attack: 0,
+        description: `It's a rock. You don't trust it...`
       },
       playStatus: 'STOPPED'
     }
@@ -48,6 +48,7 @@ class App extends Component {
     classForMessage = classForMessage || ''
     const mainTerminal = document.getElementById('main-terminal')
     const inLineClass = classForMessage ?  ` class="${classForMessage}"` : ''
+
     if (typeof message === 'string') {
       const newLine = document.createElement('p')
       newLine.innerHTML = `<span${inLineClass}>${message}</span>`
@@ -134,9 +135,10 @@ class App extends Component {
         newInputHistory[newInputHistory.length - 1] = this.state.input
         this.setState({ inputHistory: newInputHistory })
       }
-      newInputHistoryStep > 0
-        ? newInputHistoryStep--
-        : newInputHistoryStep = 0
+      newInputHistoryStep > 0 ?
+        newInputHistoryStep-- :
+        newInputHistoryStep = 0;
+
       const replacementInput = this.state.inputHistory[newInputHistoryStep]
       this.setState({
         inputHistoryStep: newInputHistoryStep,
@@ -144,9 +146,10 @@ class App extends Component {
       })
     }
     else if (e.keyCode == '40') { // down arrow
-      newInputHistoryStep < this.state.inputHistory.length - 1
-        ? newInputHistoryStep++
-        : newInputHistoryStep = this.state.inputHistory.length - 1
+      newInputHistoryStep < this.state.inputHistory.length - 1 ?
+        newInputHistoryStep++ :
+        newInputHistoryStep = this.state.inputHistory.length - 1;
+
       const replacementInput = this.state.inputHistory[newInputHistoryStep]
       this.setState({
         inputHistoryStep: newInputHistoryStep,
