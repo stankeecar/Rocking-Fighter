@@ -90,11 +90,11 @@ class App extends Component {
 
   onEnterInput(e) {
     e.preventDefault()
-    if (!this.inputIsValid(this.state.input)) {
+    const userInput = this.state.input.toLowerCase().replace(/[^\w\s]/gi, '').trim()
+    if (!this.inputIsValid(userInput)) {
       this.setState({input: ''})
       return
     }
-    const userInput = this.state.input.toLowerCase().replace(/[^\w\s]/gi, '')
     const newInputHistory = this.state.inputHistory.slice()
     newInputHistory.splice(this.state.inputHistory.length - 1,0,userInput)
     this.setState({
