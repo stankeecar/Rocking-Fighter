@@ -114,16 +114,12 @@ class App extends Component {
     this.setState({input: ''})
   }
 
-  onPageLoad() {
+  componentDidMount() {
+    this.mainInput.focus()
     this.addNewLine(Welcome({
       character: this.state.character,
       enemy: this.state.enemy
     }))
-  }
-
-  componentDidMount() {
-    this.mainInput.focus()
-    this.onPageLoad()
   }
 
   checkKey(e) {
