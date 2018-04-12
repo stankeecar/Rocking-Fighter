@@ -1,7 +1,16 @@
 const dict = {
   attack: [
-    'hit'
+    'hit',
+    'harm',
+    'damage',
+    'hurt'
   ],
+  punch: [
+    'fisthit',
+    'fist',
+    'fisticuffs',
+    'give knucklesandwich'
+  ]
   help: [
     '?',
     'h'
@@ -15,6 +24,9 @@ const dict = {
     'grab',
     'acquire'
   ],
+  give: [
+    'hand'
+  ]
   use: [
     'utilize'
   ],
@@ -39,6 +51,12 @@ const dict = {
   ],
   hide: [
     'conceal'
+  ],
+  equip: [
+    'wear'
+  ],
+  unequip: [
+    'takeoff'
   ]
 }
 
