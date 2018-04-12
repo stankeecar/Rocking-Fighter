@@ -24,7 +24,6 @@ class App extends Component {
         attack: 0,
         description: `It's a rock. You don't trust it...`
       },
-      playStatus: 'STOPPED'
     }
     this.changeInput = this.changeInput.bind(this)
     this.onEnterInput = this.onEnterInput.bind(this)
@@ -82,12 +81,6 @@ class App extends Component {
         this.setState({
           enemy: attackInstance.enemy
         })
-        if (attackInstance.enemy.health === 0) {
-          this.setState({playStatus: 'PLAYING'})
-          setTimeout(() =>{
-            this.setState({playStatus: 'STOPPED'})
-          }, 5000)
-        }
         this.addNewLine(attackInstance.message, 'cpu-response-printed')
         break
       default:
