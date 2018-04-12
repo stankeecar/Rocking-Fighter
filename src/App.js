@@ -4,6 +4,7 @@ import Attack from './Attack'
 import Help from './Help'
 import Welcome from './Welcome'
 import PrintTerminal from './PrintTerminal'
+import parsingDictionary from './parsingDictionary'
 
 class App extends Component {
   constructor() {
@@ -45,9 +46,10 @@ class App extends Component {
 
   parseInput(text) {
     const textArray = text.split(' ')
-    const verb = textArray[0]
+    const verbActual = textArray[0]
+    const verbTechnical = parsingDictionary(verbActual)
     const noun = textArray[1]
-    switch(verb) {
+    switch(verbTechnical) {
       case 'help':
         const helpArray = Help(noun)
         PrintTerminal(helpArray)
@@ -62,14 +64,17 @@ class App extends Component {
         })
         PrintTerminal(attackInstance.message)
         break
+      case 'error':
+        PrintTerminal([`Do not understand "${verbActual}"`])
+        break
       default:
-        PrintTerminal([`Do not understand "${text}"`])
+        PrintTerminal([`Cannot "${text}" right now.`])
     }
   }
 
   onEnterInput(e) {
     e.preventDefault()
-    const userInput = this.state.input.toLowerCase().replace(/[^\w\s]/gi, '').trim().replace(/[' ']+/gi, ' ')
+    const userInput = this.state.input.toLowerCase().replace(/[^\w\s?!]/gi, '').trim().replace(/[' ']+/gi, ' ')
     if (!this.inputIsValid(userInput)) {
       this.setState({input: ''})
       return
