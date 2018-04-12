@@ -117,7 +117,7 @@ class App extends Component {
   checkKey(e) {
     e = e || window.event
     let newInputHistoryStep = this.state.inputHistoryStep
-    if (e.keyCode == '38') { // up arrow
+    if (e.keyCode === '38') { // up arrow
       if (newInputHistoryStep === this.state.inputHistory.length - 1) {
         const newInputHistory = this.state.inputHistory.slice()
         newInputHistory[newInputHistory.length - 1] = this.state.input
@@ -133,7 +133,7 @@ class App extends Component {
         input: replacementInput,
       })
     }
-    else if (e.keyCode == '40') { // down arrow
+    else if (e.keyCode === '40') { // down arrow
       newInputHistoryStep < this.state.inputHistory.length - 1 ?
         newInputHistoryStep++ :
         newInputHistoryStep = this.state.inputHistory.length - 1;
