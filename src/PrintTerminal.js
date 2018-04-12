@@ -1,5 +1,6 @@
 function PrintTerminal(message, classForMessage = 'cpu-response-printed') {
   const mainTerminal = document.getElementById('main-terminal')
+  if (typeof message === 'string') message = [message]
   for (let i = 0; i < message.length; i++) {
     const newLine = document.createElement('p')
     if (classForMessage === "user-text-printed") {
