@@ -21,14 +21,13 @@ function Help(query){
     attack: attack,
     look: look,
   }
-  const response = helpList[query] ?
+  let response = helpList[query] ?
     helpList[query].slice() :
     [`Can't help with "${query}"`]
   if (query === 'general') {
     const keyList = Object.keys(helpList)
-    // concat isn't working. We tried.
-    // response.concat(keyList)
-    response.push(keyList)
+    keyList.shift()
+    response = response.concat(keyList)
   }
 
   return response
