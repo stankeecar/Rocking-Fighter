@@ -3,7 +3,6 @@ import './App.css';
 import Attack from './Attack'
 import Help from './Help'
 import Welcome from './Welcome'
-import VictorySound from './VictorySound'
 
 class App extends Component {
   constructor() {
@@ -165,7 +164,6 @@ class App extends Component {
         <form onSubmit={this.onEnterInput}>
           <input className="main-input"  id="main-input" type="text" value={this.state.input} onChange={this.changeInput} ref={(input)=>{this.mainInput = input}} autoComplete="off"/>
         </form>
-        <VictorySound playStatus={this.state.playStatus}/>
       </div>
     );
   }
